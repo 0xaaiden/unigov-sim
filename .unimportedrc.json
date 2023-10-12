@@ -1,0 +1,14 @@
+{
+  "entry": ["app/page.tsx", "app/**/*.{js,ts,jsx,tsx}", "simulation/index.ts"],
+  "extensions": [".ts", ".js"],
+  "ignorePatterns": ["**/node_modules/**", "private/**"],
+  "ignoreUnresolved": ["some-npm-dependency"],
+  "ignoreUnimported": ["src/i18n/locales/en.ts", "src/i18n/locales/nl.ts"],
+  "ignoreUnused": ["bcrypt", "create-emotion"],
+  "moduleDirectory": ["node_modules", "app"],
+  "aliases": {
+    "@/components/*": ["./components", "./components/*"]
+  },
+  "respectGitignore": true,
+  "scannedDirs": ["./modules"]
+}
