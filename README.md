@@ -1,15 +1,9 @@
 ## **Unigov-Sim: Proposal Simulation Tool**
 
-### **Introduction**
 
-**Unigov-Sim** is a one-stop solution to visualize and forecast the outcomes of proposals before submitting them a Governor Bravo's implementation. We provide a smooth interface, along with automated abi parsing for target contracts and type checking for functions called in your proposal.
+**Unigov-Sim** is a one-stop app to simulate the outcomes of proposals before submitting them to Governor Bravo implementation. We provide a smooth interface, along with automated ABI parsing for target contracts and type checking for functions supported.
 
 ### **Quick Start**
-
-To get started with your simulation service, utilize this quick one-liner:
-
-<!-- Reqs make sure node 18+ is installed, nvm use --lts to install node 18 -->
-
 Requirements:
 
 - Node 18+ (
@@ -20,18 +14,23 @@ Requirements:
 npx create unigov-sim@latest
 ```
 
-Follow the intuitive steps to add your api keys and governance contract to get started.
+To get started, utilize this quick one-liner setup:
+
+<!-- Reqs make sure node 18+ is installed, nvm use --lts to install node 18 -->
+
+
+Follow the intuitive steps to add your API keys and Governance contract address to get started.
 
 ### **Features**
 
-- **Intuitive UI**: Navigate through multiple steps with ease, back and forth.
-- **Smart Error Handling**: Make sure your account is connected and has the right permissions before submitting your proposal.
-- **Dynamic ABI Parsing**: Parse and display the functions for every contract you add to your proposal.
-- **Enhanced Simulation**: Simulate the outcome of your proposal including state changes and events triggered.
+- **Intuitive UI**: Navigate through multiple steps with ease, back and forth, make edits to your proposals without losing state.
+- **Smart Error Handling**: It verifies your account is connected and has enough votes to submit the proposal.
+- **Dynamic ABI Parsing and Input Typings**: Parse and display the functions for verified target contracts.
+- **Enhanced Simulation**: Simulate the outcome of your proposal and visualize state changes and events triggered on chain.
 
 ### Links
 
-- Live Site URL: [Here](https://playground.unigov.live/)
+- Live Site URL: [https://playground.unigov.live/](https://playground.unigov.live/)
 
 ## Author
 
