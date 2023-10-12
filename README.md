@@ -10,16 +10,17 @@ Requirements:
   [install nvm](https://github.com/nvm-sh/nvm#installing-and-updating) and then run `nvm use --lts` to uprade to node 18.)
 - Npm 8+
 
+<!-- Reqs make sure node 18+ is installed, nvm use --lts to install node 18 -->
+
+
+To get started, utilize this quick one-liner setup:
+
 ```bash
 npx create unigov-sim@latest
 ```
 
-To get started, utilize this quick one-liner setup:
 
-<!-- Reqs make sure node 18+ is installed, nvm use --lts to install node 18 -->
-
-
-Follow the intuitive steps to add your API keys and Governance contract address to get started.
+Follow the steps to add your API keys and Governance contract address to get started.
 
 ### **Features**
 
