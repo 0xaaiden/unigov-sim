@@ -78,13 +78,13 @@ export default async function simulateNow(config2: SimulationConfig) {
       proposal.endBlock.toNumber() <= latestBlock.number ? provider.getBlock(proposal.endBlock.toNumber()) : null,
     ])
 
-    // save checkResults to file
-    const dir = `./simulation/reports/${config.daoName}/${config.governorAddress}`
-    const filename = `./simulation/reports/${config.daoName}/${config.governorAddress}/checkResults.json`
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true })
-    }
-    fs.writeFileSync(filename, JSON.stringify(checkResults, null, 2))
+    // // save checkResults to file
+    // const dir = `./simulation/reports/${config.daoName}/${config.governorAddress}`
+    // const filename = `./simulation/reports/${config.daoName}/${config.governorAddress}/checkResults.json`
+    // if (!fs.existsSync(dir)) {
+    //   fs.mkdirSync(dir, { recursive: true })
+    // }
+    // fs.writeFileSync(filename, JSON.stringify(checkResults, null, 2))
   }
   console.log('Done!', checkResults)
   return checkResults
