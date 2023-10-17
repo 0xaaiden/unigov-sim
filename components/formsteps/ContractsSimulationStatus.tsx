@@ -9,8 +9,11 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { SimulationConfig } from '@/lib/types/types'
 import { AllCheckResults } from '@/simulation/types'
 import { useQueryState } from 'next-usequerystate'
-
+import { useChat } from 'ai/react'
 import ApiCaller from '../providers/api-caller'
+import { Wand } from 'lucide-react'
+import { Button } from '../ui/button'
+import { Badge } from '../ui/badge'
 
 const STATUS_ITEMS = [
   { key: 'checkStateChanges', text: 'Report State Changes' },
@@ -59,7 +62,7 @@ const AccordionStatusItem = ({ label, text, content }: any): JSX.Element => {
           <span className="text-muted-foreground">{text}</span>
         </p>
       </AccordionTrigger>
-      <AccordionContent>
+      <AccordionContent className=" overflow-auto ">
         <Markdown className="" rehypePlugins={[rehypeRaw]}>
           {content}
         </Markdown>
@@ -117,6 +120,7 @@ const ContractSimulationStatus = ({ simConfig }: { simConfig: SimulationConfig }
       result: { info: [], errors: [], warnings: [] },
     },
   })
+  const { messages, append, input, setInput, handleInputChange, handleSubmit, error, data, setMessages } = useChat({})
   const [status, setStatus] = useQueryState('status', {
     defaultValue: 'pending',
   })
@@ -142,6 +146,16 @@ const ContractSimulationStatus = ({ simConfig }: { simConfig: SimulationConfig }
         })
       }
     )
+    setMessages([
+      {
+        id: '1',
+        role: 'user',
+        content:
+          'You are a web3 technical expert from the Uniswap Community. We need your help to  understand on chain blockchain data.\
+        We have simulated the execution of a proposal to be submitted to the Uniswap Governance.\n\
+        Can you please review the results and explain what happened to someone not technical (ignore `proposals` key changes in your summary). Format the response nicely in markdown format and highlight important points. \n',
+      },
+    ])
   }, [simConfig])
 
   React.useEffect(() => {
@@ -163,7 +177,7 @@ const ContractSimulationStatus = ({ simConfig }: { simConfig: SimulationConfig }
   return (
     <FormWrapper description="Simulate the execution of a function on a smart contract." title="Contracts Simulations">
       <div className="flex h-full flex-col gap-3 overflow-auto">
-        <ScrollArea className="w-full rounded-md border-0">
+        <div className="w-full rounded-md border-0 w-full overflow-auto">
           <div className="w-full">
             <h4 className="mb-4 text-sm font-medium leading-none">
               Proposal Simulation Status{' '}
@@ -175,7 +189,46 @@ const ContractSimulationStatus = ({ simConfig }: { simConfig: SimulationConfig }
                 )}{' '}
                 of {Object.values(simulationResults).length}{' '}
               </span>
+              <Button
+                className="float-right mr-2"
+                variant={'outline'}
+                onClick={(e) => {
+                  e.preventDefault()
+                  setInput(JSON.stringify(simulationResults))
+                  append({ role: 'user', content: JSON.stringify(simulationResults) })
+                }}
+                disabled={pendingAPI}>
+                <Wand className="mr-2" size={16} /> Generate AI Summary
+              </Button>
             </h4>{' '}
+            <div className="w-full overflow-auto max-h-52">
+              {messages.map((m) => (
+                <div key={m.id} className="w-full overflow-auto">
+                  {/* only print if role isnot user */}
+                  {m.role === 'user' ? null : (
+                    <p className="text-sm font-medium leading-none">
+                      <Badge
+                        variant={'outline'}
+                        className="
+                      bg-yellow-700 text-white animate-pulse mb-2">
+                        AI Summary
+                      </Badge>
+
+                      <span
+                        className="
+                        text-sm  text-muted-foreground
+                      ">
+                        {
+                          <Markdown className="" rehypePlugins={[rehypeRaw]}>
+                            {m.content}
+                          </Markdown>
+                        }
+                      </span>
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
             <Accordion collapsible className="w-full" type="single">
               {pendingAPI ? (
                 <AccordionStatusItem content={pendingState.info.join(', ')} label={pendingState.label} text={pendingState.text.join(', ')} />
@@ -189,7 +242,7 @@ const ContractSimulationStatus = ({ simConfig }: { simConfig: SimulationConfig }
               )}
             </Accordion>
           </div>
-        </ScrollArea>
+        </div>
       </div>{' '}
     </FormWrapper>
   )

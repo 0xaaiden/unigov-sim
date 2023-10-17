@@ -6,6 +6,8 @@ import { v4 } from 'uuid'
 import AutoForm, { AutoFormSubmit, FieldConfig, ZodObjectOrWrapped } from '@/components/ui/auto-form'
 import { generateZodSchemaForFunction } from '@/lib/generateSchema'
 import { tag, tags } from '@/lib/types/types'
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
 
 // Define your form schema using zod
 
@@ -29,6 +31,7 @@ export default function FormGen({
 }) {
   const [formSchema, setFormSchema] = useState<ZodObjectOrWrapped>()
   const [fieldConfig, setFieldConfig] = useState<{ [k: string]: string }>({})
+  const [TxnValue, setTxnValue] = useState<number>(0)
 
   useEffect(() => {
     if (value.length > 1) {
@@ -57,6 +60,7 @@ export default function FormGen({
             contractAbi: contractAbi,
             function: chosenFnc,
             params: valuesTfmd,
+            txnValue: TxnValue,
           },
         ]
         setTags(newTags)
@@ -64,7 +68,19 @@ export default function FormGen({
       }}>
       <div
         //justify right
-        className="flex justify-end">
+        className="flex justify-between items-end">
+        <div>
+          <Label htmlFor="value">Value</Label>
+          <Input
+            placeholder="Transaction Value"
+            className="max-w-lg"
+            name="txnValue"
+            type="number"
+            onChange={(e) => {
+              setTxnValue(Number(e.target.value))
+            }}
+          />
+        </div>
         <AutoFormSubmit>Add Function</AutoFormSubmit>
       </div>
 
